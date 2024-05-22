@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me</title>
+    <link rel="icon" type="image/x-icon" href="/static/icon.png">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #fff;
+            padding: 20px 50px;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: #333;
+            font-size: 24px;
+            margin-right: 50px;
+        }
+        .nav-link {
+            color: #555;
+            font-size: 18px;
+            margin-left: 20px;
+        }
+        .container {
+            margin-top: 50px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .pillar {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .pillar h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .pillar p {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.6;
+        }
+        .back-btn {
+            margin-top: 30px;
+            font-size: 1rem;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .back-btn:hover {
+            background-color: #0056b3;
+            color: #fff;
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#" style="margin-right: 50px;">My Portfolio</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/" style="margin-left: 0;">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/aboutme">About Me</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/gallery">Gallery</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contact">Contact</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h1>About Me</h1>
+    <p>Hello! My name is Mateusz, I'm a person with diverse interests and passions. Let me tell you a bit about myself:</p>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="pillar">
+                <h2>Street Dancer</h2>
+                <p>I have an immense passion for street dancing. It's not just a hobby for me; it's a way of life. I love the rhythm, the energy, and the freedom of expression that comes with dancing.</p>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="pillar">
+                <h2>Java Developer</h2>
+                <p>By accident, I'm a Java developer. I enjoy the challenge of solving complex problems and creating efficient, scalable solutions. Java is my language of choice (lying), and I'm always eager to learn and explore new technologies.</p>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="pillar">
+                <h2>Food Lover</h2>
+                <p>When I'm not dancing or coding, you can find me exploring the culinary world. I have a particular fondness for Japanese cuisine, especially sushi and ramen. There's something about the delicate flavors and fresh ingredients that always leaves me craving for more.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <a href="/" class="back-btn">Back</a>
+</div>
+
+</body>
+</html>

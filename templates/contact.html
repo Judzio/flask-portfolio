@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="icon" type="image/x-icon" href="/static/icon.png">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #fff;
+            padding: 20px 50px;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: #333;
+            font-size: 24px;
+            margin-right: 50px;
+        }
+        .nav-link {
+            color: #555;
+            font-size: 18px;
+            margin-left: 20px;
+        }
+        .container {
+            margin-top: 50px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: none;
+        }
+        .contact-info {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 80%;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            color: #fff;
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">My Portfolio</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/aboutme">About Me</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/gallery">Gallery</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contact">Contact</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h1>Contact Me</h1>
+    <p>Feel free to get in touch with me. You can reach me through the following channels:</p>
+    <div class="contact-info">
+        <p>Email: <a href="mailto:mateusz.judzinski@gmail.com">mateusz.judzinski@gmail.com</a></p>
+        <p>Phone: +48 517 285 370</p>
+    </div>
+    <p>Alternatively, you can fill out the form below to send me a message:</p>
+</div>
+
+<div class="container">
+    <form action="/submit_contact" method="post">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" style="width: 80%; max-width: 400px; margin: auto;" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email address:</label>
+            <input type="email" class="form-control" id="email" name="email" style="width: 80%; max-width: 400px; margin: auto;" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea class="form-control" id="message" name="message" rows="5" style="width: 80%; max-width: 400px; margin: auto;" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>
