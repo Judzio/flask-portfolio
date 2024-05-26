@@ -1,15 +1,27 @@
 from flask import Flask, render_template, request
 import git
+import os
 
 app = Flask(__name__)
 
 @app.route('/git_update', methods=['POST'])
 def git_update():
-    repo = git.Repo('./flask-portfolio')
-    origin = repo.remote.origin
-    repo.create_head('main', origin.refs.main).set_tracking_branch(origin.refs.main).checkout()
-    origin.pull()
-    return '', 200
+    try:
+        repo_path = './flask-portfolio'
+        if not os.path.exists(repo_path):
+            return 'Repository path does not exist', 404
+
+        repo = git.Repo(repo_path)
+        origin = repo.remotes.origin
+
+        repo.create_head('main', origin.refs.main).set_tracking_branch(origin.refs.main).checkout()
+        origin.pull()
+
+        return 'Repository updated successfully', 200
+    except git.exc.GitCommandError as e:
+        return f'An error occurred while updating the repository: {str(e)}', 500
+    except Exception as e:
+        return f'An unexpected error occurred: {str(e)}', 500
 
 @app.route('/')
 def home():
