@@ -6,6 +6,7 @@
     <title>Gallery</title>
     <link rel="icon" type="image/x-icon" href="/static/icon.png">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css">
     <style>
         /* Custom styles */
         body {
@@ -58,10 +59,12 @@
         }
         .gallery-img {
             width: 100%;
-            max-width: 300px;
+            height: 500px; /* Increased height for the gallery images */
             margin-bottom: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            object-fit: cover;
         }
         .carousel-item img {
             width: 100%;
@@ -71,6 +74,7 @@
             border-radius: 10px;
         }
     </style>
+
 </head>
 <body>
 
@@ -133,18 +137,26 @@
     <h1>Gallery</h1>
     <p>Enjoy these adorable dog pictures, because I don't want to hurt your eyes with mine:</p>
     <div class="row">
-        <div class="col-md-3">
+        <a class="col-md-4" href="/static/dog1.jpg" data-toggle="lightbox" data-gallery="gallery">
             <img src="/static/dog1.jpg" alt="Dog 1" class="gallery-img">
-        </div>
-        <div class="col-md-3">
+        </a>
+        <a class="col-md-4" href="/static/dog2.jpg" data-toggle="lightbox" data-gallery="gallery">
             <img src="/static/dog2.jpg" alt="Dog 2" class="gallery-img">
-        </div>
-        <div class="col-md-3">
+        </a>
+        <a class="col-md-4" href="/static/dog3.jpg" data-toggle="lightbox" data-gallery="gallery">
             <img src="/static/dog3.jpg" alt="Dog 3" class="gallery-img">
-        </div>
-        <div class="col-md-3">
+        </a>
+    </div>
+    <div class="row">
+        <a class="col-md-4" href="/static/dog4.jpg" data-toggle="lightbox" data-gallery="gallery">
             <img src="/static/dog4.jpg" alt="Dog 4" class="gallery-img">
-        </div>
+        </a>
+        <a class="col-md-4" href="/static/dog5.jpg" data-toggle="lightbox" data-gallery="gallery">
+            <img src="/static/dog5.jpg" alt="Dog 5" class="gallery-img">
+        </a>
+        <a class="col-md-4" href="/static/dog6.jpg" data-toggle="lightbox" data-gallery="gallery">
+            <img src="/static/dog6.jpg" alt="Dog 6" class="gallery-img">
+        </a>
     </div>
 </div>
 
@@ -155,5 +167,13 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
+<script>
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox();
+    });
+</script>
 </body>
 </html>
+
