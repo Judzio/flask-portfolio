@@ -1,16 +1,45 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 import git
 import os
-from datetime import datetime
-from models import db, GuestbookEntry
 
+# Import Flask-Dance and necessary components for GitHub OAuth
+from flask_dance.contrib.github import make_github_blueprint, github
+
+# Initialize Flask app and SQLAlchemy
 app = Flask(__name__)
+app.secret_key = 'mati123'  # Replace with your secret key
+
+# Configure SQLAlchemy database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///guestbook.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db.init_app(app)
+db = SQLAlchemy(app)
 
-with app.app_context():
-    db.create_all()
+# Import database models
+from models import GuestbookEntry
+
+# Flask-Dance GitHub Blueprint
+github_bp = make_github_blueprint(client_id='Ov23lilWC6wCAowW6oTr',  # Replace with your GitHub OAuth app client ID
+                                  client_secret='26072e8e5b47ace7d545c25f7d9267010fa54ca3',  # Replace with your GitHub OAuth app client secret
+                                  redirect_to='github_login')
+
+app.register_blueprint(github_bp, url_prefix='/github_login')
+
+# GitHub OAuth callback route
+@app.route('/github_login')
+def github_login():
+    if not github.authorized:
+        return redirect(url_for('github.login'))
+    resp = github.get('/user')
+    assert resp.ok, resp.text
+    # You can access user information like username using resp.json()['login']
+    return redirect(url_for('home'))
+
+# Example route to initiate GitHub OAuth login
+@app.route('/login')
+def login():
+    return redirect(url_for('github.login'))
 
 @app.route('/git_update', methods=['POST'])
 def git_update():
