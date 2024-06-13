@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guestbook</title>
+    <link rel="icon" type="image/x-icon" href="/static/icon.png">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #fff;
+            padding: 20px 50px;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: #333;
+            font-size: 24px;
+            margin-right: 50px;
+        }
+        .nav-link {
+            color: #555;
+            font-size: 18px;
+            margin-left: 20px;
+        }
+        .container {
+            margin-top: 50px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .message {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            text-align: center;
+            width: 50%;
+            margin: 20px auto;
+            position: relative;
+        }
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .message-header .nick {
+            font-size: 1.5rem;
+            color: #333;
+            flex-grow: 1;
+            text-align: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .message-header .date {
+            font-size: 0.9rem;
+            color: #777;
+            position: absolute;
+            right: 0;
+        }
+        .message p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .form-control-small {
+            width: 50%;
+            margin: 0 auto;
+        }
+        .btn-show-messages {
+            margin-top: 20px;
+        }
+        #messages-container {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/" style="margin-right: 50px;">My Portfolio</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/" style="margin-left: 0;">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/aboutme">About Me</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/gallery">Gallery</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contact">Contact</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/guestbook">Guestbook</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Guestbook</h1>
+    <form method="POST" action="/submit_guestbook">
+        <div class="form-group">
+            <label for="nick">Nick</label>
+            <input type="text" class="form-control form-control-small" id="nick" name="nick" required>
+        </div>
+        <div class="form-group">
+            <label for="text">Message</label>
+            <textarea class="form-control form-control-small" id="text" name="text" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <button class="btn btn-primary btn-show-messages" onclick="toggleMessages()">Show Messages</button>
+
+    <div id="messages-container">
+        {% for message in messages %}
+        <div id="message-{{ message.id }}" class="message">
+            <div class="message-header">
+                <span class="nick">{{ message.nick }}</span>
+                <span class="date">{{ message.date.strftime('%Y-%m-%d %H:%M:%S') }}</span>
+            </div>
+            <p>{{ message.text }}</p>
+            <button class="btn btn-primary btn-sm btn-edit" onclick="editMessage('{{ message.id }}')">Edit</button>
+            <button class="btn btn-danger btn-sm btn-delete" onclick="deleteMessage('{{ message.id }}')">Delete</button>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-message-form" method="POST" action="">
+                    <input type="hidden" id="edit-message-id" name="message_id">
+                    <div class="form-group">
+                        <label for="edit-nick">Nick</label>
+                        <input type="text" class="form-control" id="edit-nick" name="nick" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-text">Message</label>
+                        <textarea class="form-control" id="edit-text" name="text" rows="3" required></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="acceptEdit()">Accept</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha384-ZvpUoO/+P1bPbESrtrN26XEd/o2tI7z0DIt1jq63guFf5+8yuu4eG/z7qD9PEvE" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-pO6qVbPpP0kWDAF9e+8RmO2v+7bGjO4gC7p/5v7ERH1Zs/ZlECYgy5Zq0ZTJGhFr" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-cV8G4FIOg9ENuq5x0RQY3V65zawlpO8o3E4Cah4EnFxz4qmyhzJ+4vVoYmH5sC/4" crossorigin="anonymous"></script>
+
+<script>
+    function toggleMessages() {
+        const messagesContainer = document.getElementById('messages-container');
+        if (messagesContainer.style.display === 'none' || messagesContainer.style.display === '') {
+            messagesContainer.style.display = 'block';
+        } else {
+            messagesContainer.style.display = 'none';
+        }
+    }
+
+    function editMessage(messageId) {
+        const message = document.getElementById(`message-${messageId}`);
+        const nick = message.querySelector('.nick').innerText;
+        const text = message.querySelector('p').innerText;
+        document.getElementById('edit-nick').value = nick;
+        document.getElementById('edit-text').value = text;
+        document.getElementById('edit-message-id').value = messageId;
+
+        const formAction = `/update_message/${messageId}`;
+        document.getElementById('edit-message-form').action = formAction;
+
+        $('#editModal').modal('show');
+    }
+
+    function deleteMessage(messageId) {
+        if (confirm('Are you sure you want to delete this message?')) {
+            fetch(`/delete_message/${messageId}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    const messageDiv = document.getElementById(`message-${messageId}`);
+                    messageDiv.parentNode.removeChild(messageDiv);
+                } else {
+                    throw new Error(response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to delete message: ' + error.message);
+            });
+        }
+    }
+
+    function acceptEdit() {
+        const form = document.getElementById('edit-message-form');
+        const messageId = document.getElementById('edit-message-id').value;
+
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form)
+        })
+        .then(response => {
+            if (response.ok) {
+                $('#editModal').modal('hide');
+                window.location.reload();
+            } else {
+                throw new Error('Failed to update message.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to update message: ' + error.message);
+        });
+    }
+</script>
+</body>
+</html>
